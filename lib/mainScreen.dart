@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:TMart/firebaseDatabase.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:TMart/colorFile.dart';
 import 'package:flutter/material.dart';
@@ -136,7 +137,12 @@ class _SideNavBarState extends State<SideNavBar>
                                     print('pressed');
                                   },
                                   child: Icon(Icons.settings)),
-                                   Text('Settings',style: TextStyle(fontSize: 14,),),
+                              Text(
+                                'Settings',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
                             ],
                           ),
                           Column(
@@ -144,16 +150,136 @@ class _SideNavBarState extends State<SideNavBar>
                               FlatButton(
                                   onPressed: () async {
                                     logoutUser();
-                                    Navigator.pushReplacementNamed(context, '/');
+                                    Navigator.pushReplacementNamed(
+                                        context, '/');
                                   },
-                                  child: Icon(Icons.exit_to_app,size: 28,)),
-                                  Text('Logout',style: TextStyle(fontSize: 14,),),
+                                  child: Icon(
+                                    Icons.exit_to_app,
+                                    size: 28,
+                                  )),
+                              Text(
+                                'Logout',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
                             ],
                           ),
                         ],
                       ),
-                    )
+                    ),
                   ]),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          color: persianGreen,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Home',
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Colors.white,
+                                    fontFamily: "maven",
+                                    letterSpacing: 2,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Icon(
+                                Icons.navigate_next,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 7,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          color: persianGreen,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Wellbeing',
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Colors.white,
+                                    fontFamily: "maven",
+                                    letterSpacing: 2,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Icon(
+                                Icons.navigate_next,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 7,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          color: persianGreen,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Utilities',
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Colors.white,
+                                    fontFamily: "maven",
+                                    letterSpacing: 2,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Icon(
+                                Icons.navigate_next,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 7,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          color: persianGreen,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Fast Food',
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Colors.white,
+                                    fontFamily: "maven",
+                                    letterSpacing: 2,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Icon(
+                                Icons.navigate_next,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ]),
                 ),
               ]),
               color: charcoal,
@@ -232,55 +358,169 @@ class Layout1 extends StatefulWidget {
 }
 
 class _Layout1State extends State<Layout1> with ColorFile, FirebaseDatabase {
+  Widget whatsNewLayout(
+      BuildContext context, DocumentSnapshot documentSnapshot) {
+    String url = documentSnapshot.get('img');
+    return Container(
+      height: 500,
+      width: MediaQuery.of(context).size.width,
+      child: Image.network(
+        url,
+        fit: BoxFit.contain,
+      ),
+    );
+  }
+
+  Widget topOffersLayout(
+      BuildContext context, DocumentSnapshot documentSnapshot) {
+    String from = documentSnapshot.get('from');
+    String what = documentSnapshot.get('what');
+    String code = documentSnapshot.get('code');
+    return Container(
+      decoration: BoxDecoration(
+          color: sandyBrown, borderRadius: BorderRadius.circular(12)),
+      margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            from,
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            what,
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            code,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
+      primary: true,
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       children: [
         Container(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: TextField(
-              decoration: InputDecoration(
-                suffixIcon: Icon(
-                  Icons.arrow_left,
-                  size: 30,
-                ),
-                hintText: 'Search Here...',
-                prefixIcon: Icon(
-                  Icons.arrow_right,
-                  size: 30,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-          ),
-        ),
-        Container(
-          child: Column(
+          margin: EdgeInsets.all(20),
+          child: Row(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height * 0.2,
-                margin: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        child:
-                            Container(color: burntRed, child: Text('$index')),
-                      );
-                    }),
+                child: Text(
+                  'Whats up?',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: "maven",
+                      fontSize: 33,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-              RaisedButton(onPressed: () {
-                getUser();
-              })
+              Spacer(),
+              Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.grey[200]),
+                child: IconButton(
+                    icon: Icon(
+                      Icons.search,
+                      size: 30,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {}),
+              ),
+              SizedBox(width : 10),
+              Container(
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.grey[200]),
+                child: IconButton(
+                    icon: Icon(
+                      Icons.shopping_basket,
+                      size: 30,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {}),
+              )
             ],
           ),
         ),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.3,
+          margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+          child: StreamBuilder<QuerySnapshot>(
+            stream:
+                FirebaseFirestore.instance.collection("whatsNew").snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: snapshot.data.docs.length,
+                  itemBuilder: (context, index) {
+                    return whatsNewLayout(context, snapshot.data.docs[index]);
+                  },
+                );
+              } else
+                return Center(child: Text('Error in fetching Data...'));
+            },
+          ),
+        ),
+        SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
+            height: MediaQuery.of(context).size.height * 0.4,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+                color: burntRed, borderRadius: BorderRadius.circular(10)),
+            child: Column(children: [
+              Container(
+                margin: EdgeInsets.fromLTRB(5, 10, 5, 10),
+                child: Text('Top Offers',
+                    style: TextStyle(
+                      letterSpacing: 2,
+                        fontSize: 30,
+                        fontFamily: "maven",
+                        fontWeight: FontWeight.bold)),
+              ),
+              Expanded(
+                  child: Container(
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection("offers")
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        //scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data.docs.length,
+                        itemBuilder: (context, index) {
+                          return topOffersLayout(
+                              context, snapshot.data.docs[index]);
+                        },
+                      );
+                    } else
+                      return Center(child: Text('Error in fetching Data...'));
+                  },
+                ),
+              ))
+            ]),
+          ),
+        )
       ],
     );
   }

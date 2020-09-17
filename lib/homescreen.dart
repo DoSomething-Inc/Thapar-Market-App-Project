@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> with ColorFile {
                       Expanded(
                         flex: 1,
                         child: Container(
-                            margin: EdgeInsets.fromLTRB(10, 0, 0, 10),
+                            margin: EdgeInsets.fromLTRB(10, 10, 0, 10),
                             alignment: Alignment.topCenter,
                             child: Text(
                               'Made with ❤ by Harmanjit14',
@@ -143,7 +143,7 @@ class _BottomContainerState extends State<BottomContainer>
           Column(children: [
             Container(
                 alignment: Alignment.topLeft,
-                margin: EdgeInsets.fromLTRB(0, 0, 20, 25),
+                margin: EdgeInsets.fromLTRB(0, 0, 20, 10),
                 child: GestureDetector(
                   onTap: () {
                     setState(() {
@@ -165,7 +165,7 @@ class _BottomContainerState extends State<BottomContainer>
                     email = value;
                   },
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                   keyboardType: TextInputType.emailAddress,
                   maxLines: 1,
@@ -201,7 +201,7 @@ class _BottomContainerState extends State<BottomContainer>
                     password = value;
                   },
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                   ),
                   keyboardType: TextInputType.text,
                   maxLines: 1,
